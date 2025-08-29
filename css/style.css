@@ -247,13 +247,14 @@ body {
 }
 
 .quote-card:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .quote-text {
     font-style: italic;
     line-height: 1.6;
-    opacity: 0.9;
+    color: #4a7c23;
+    opacity: 1;
 }
 
 /* ========== 준비중 섹션 ========== */
