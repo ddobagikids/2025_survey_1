@@ -188,6 +188,7 @@ body {
 
 .chart-wrapper {
     position: relative;
+    background: rgba(255, 255, 255, 0.3);
     height: 400px;
     margin-bottom: 1rem;
 }
@@ -238,7 +239,7 @@ body {
 }
 
 .quote-card {
-    background: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
     border-radius: 12px;
     padding: 1.5rem;
@@ -247,7 +248,7 @@ body {
 }
 
 .quote-card:hover {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.7);
 }
 
 .quote-text {
