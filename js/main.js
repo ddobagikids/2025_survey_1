@@ -20,7 +20,7 @@ async function loadSurveyData() {
     try {
         // 먼저 외부 JSON 파일 로드 시도
         try {
-            const response = await fetch('survey_complete.json');
+            const response = await fetch('./data/survey1.json');
             if (response.ok) {
                 surveyData = await response.json();
                 console.log('외부 JSON 파일 로드 성공');
