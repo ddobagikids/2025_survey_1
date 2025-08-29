@@ -697,7 +697,7 @@
             
             try {
                 // JSON 파일에서 데이터 로드
-                const response = await fetch('/data/survey.json');
+                const response = await fetch('./data/survey.json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -707,7 +707,7 @@
                 initializeDashboard();
             } catch (error) {
                 console.error('설문조사 데이터 로드 실패:', error);
-                showError('설문조사 데이터를 불러오는데 실패했습니다. JSON 파일을 확인해주세요.');
+                showError(`설문조사 데이터를 불러오는데 실패했습니다. 오류: ${error.message}`);
             }
         }
 
