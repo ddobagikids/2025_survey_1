@@ -375,6 +375,7 @@
             font-style: italic;
             line-height: 1.6;
             color: rgba(74, 124, 35, 0.8);
+            font-weight: bold;
         }
 
         .quote-text:before {
@@ -950,7 +951,7 @@
                 <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
                     <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.5); border-radius: 12px;">
                         <div style="font-size: 3rem; font-weight: bold; color: white; margin-bottom: 0.5rem;">${question.score}/10</div>
-                        <div style="color: rgba(255,255,255,0.8);">평균 만족도</div>
+                        <div style="color: rgba(255,255,255,0.8); font-weight: bold;">평균 만족도</div>
                     </div>
                     <div class="narrative-content">
                         ${allComments.length > 0 ? `
@@ -1137,6 +1138,9 @@
                             max: 100,
                             ticks: { 
                                 color: 'white',
+                                font: {
+                                    weight: 'bold'
+                                },
                                 callback: function(value) {
                                     return value + '%';
                                 }
@@ -1150,7 +1154,8 @@
                             ticks: { 
                                 color: 'white',
                                 font: {
-                                    size: 12
+                                    size: 12,
+                                    weight: 'bold'
                                 },
                                 callback: function(value, index) {
                                     const item = chartData[index];
