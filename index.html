@@ -303,7 +303,7 @@
 
         /* 차트 컨테이너 */
         .chart-container {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             border-radius: 16px;
             padding: 2rem;
@@ -343,7 +343,7 @@
         }
 
         .narrative-section {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             border-radius: 16px;
             padding: 2rem;
@@ -359,7 +359,7 @@
         }
 
         .quote-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             border-radius: 12px;
             padding: 1.5rem;
@@ -368,7 +368,7 @@
         }
 
         .quote-card:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.25);
         }
 
         .quote-text {
@@ -821,26 +821,31 @@
         function createChartContent(question, questionNumber) {
             let improvementSection = '';
             
-            // 문항 2번의 경우 긍정/개선 의견 처리
-            if (questionNumber === 2 && question.data.positive_comments) {
+            // 문항 2번의 경우 긍정/개선 의견 처리 - 랜덤으로 섞기
+            if (questionNumber === 2 && (question.data.positive_comments || question.data.negative_comments)) {
+                let allComments = [];
+                if (question.data.positive_comments) {
+                    allComments = allComments.concat(question.data.positive_comments);
+                }
+                if (question.data.negative_comments) {
+                    allComments = allComments.concat(question.data.negative_comments);
+                }
+                
+                // 랜덤으로 섞기
+                for (let i = allComments.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [allComments[i], allComments[j]] = [allComments[j], allComments[i]];
+                }
+                
                 improvementSection += `
                     <div class="narrative-content" style="margin-top: 2rem;">
                         <div class="narrative-section">
-                            ${question.data.positive_comments.map(response => `
+                            ${allComments.map(response => `
                                 <div class="quote-card">
                                     <p class="quote-text">${response}</p>
                                 </div>
                             `).join('')}
                         </div>
-                        ${question.data.negative_comments ? `
-                            <div class="narrative-section" style="margin-top: 2rem;">
-                                ${question.data.negative_comments.map(response => `
-                                    <div class="quote-card">
-                                        <p class="quote-text">${response}</p>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        ` : ''}
                     </div>
                 `;
             }
@@ -887,6 +892,21 @@
 
         // 통합 콘텐츠 생성 (문항 2: 차트 + 서술형을 세로로 배치)
         function createCombinedContent(question, questionNumber) {
+            // 긍정/부정 의견을 랜덤으로 섞기
+            let allComments = [];
+            if (question.data.positive_comments) {
+                allComments = allComments.concat(question.data.positive_comments);
+            }
+            if (question.data.negative_comments) {
+                allComments = allComments.concat(question.data.negative_comments);
+            }
+            
+            // 랜덤으로 섞기
+            for (let i = allComments.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allComments[i], allComments[j]] = [allComments[j], allComments[i]];
+            }
+            
             return `
                 <div class="combined-section">
                     <div class="chart-container">
@@ -895,18 +915,9 @@
                         </div>
                     </div>
                     <div class="narrative-content">
-                        ${question.data.positive_comments ? `
+                        ${allComments.length > 0 ? `
                             <div class="narrative-section">
-                                ${question.data.positive_comments.map(response => `
-                                    <div class="quote-card">
-                                        <p class="quote-text">${response}</p>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        ` : ''}
-                        ${question.data.negative_comments ? `
-                            <div class="narrative-section" style="margin-top: 2rem;">
-                                ${question.data.negative_comments.map(response => `
+                                ${allComments.map(response => `
                                     <div class="quote-card">
                                         <p class="quote-text">${response}</p>
                                     </div>
@@ -920,25 +931,31 @@
 
         // 만족도 점수 표시 (텍스트만, 그래프 없음)
         function createSatisfactionContent(question) {
+            // 긍정/부정 의견을 랜덤으로 섞기
+            let allComments = [];
+            if (question.data.positive_comments) {
+                allComments = allComments.concat(question.data.positive_comments);
+            }
+            if (question.data.negative_comments) {
+                allComments = allComments.concat(question.data.negative_comments);
+            }
+            
+            // 랜덤으로 섞기
+            for (let i = allComments.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allComments[i], allComments[j]] = [allComments[j], allComments[i]];
+            }
+            
             return `
                 <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
-                    <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 12px;">
+                    <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.2); border-radius: 12px;">
                         <div style="font-size: 3rem; font-weight: bold; color: white; margin-bottom: 0.5rem;">${question.score}/10</div>
                         <div style="color: rgba(255,255,255,0.8);">평균 만족도</div>
                     </div>
                     <div class="narrative-content">
-                        ${question.data.positive_comments ? `
+                        ${allComments.length > 0 ? `
                             <div class="narrative-section">
-                                ${question.data.positive_comments.map(response => `
-                                    <div class="quote-card">
-                                        <p class="quote-text">${response}</p>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        ` : ''}
-                        ${question.data.negative_comments ? `
-                            <div class="narrative-section" style="margin-top: 2rem;">
-                                ${question.data.negative_comments.map(response => `
+                                ${allComments.map(response => `
                                     <div class="quote-card">
                                         <p class="quote-text">${response}</p>
                                     </div>
@@ -964,22 +981,25 @@
         function createNarrativeContent(question) {
             let content = '';
             
+            // positive와 improvement 의견을 랜덤으로 섞기
+            let allComments = [];
             if (question.data.positive) {
-                content += `
-                    <div class="narrative-section">
-                        ${question.data.positive.map(response => `
-                            <div class="quote-card">
-                                <p class="quote-text">${response}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
+                allComments = allComments.concat(question.data.positive);
             }
-            
             if (question.data.improvement) {
+                allComments = allComments.concat(question.data.improvement);
+            }
+            
+            // 랜덤으로 섞기
+            for (let i = allComments.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allComments[i], allComments[j]] = [allComments[j], allComments[i]];
+            }
+            
+            if (allComments.length > 0) {
                 content += `
                     <div class="narrative-section">
-                        ${question.data.improvement.map(response => `
+                        ${allComments.map(response => `
                             <div class="quote-card">
                                 <p class="quote-text">${response}</p>
                             </div>
@@ -988,7 +1008,7 @@
                 `;
             }
             
-            if (question.data.responses) {
+            if (question.data.responses && !question.data.positive && !question.data.improvement) {
                 content = `
                     <div class="narrative-section">
                         <h4 class="narrative-title">💬 응답 내용</h4>
