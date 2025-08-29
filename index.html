@@ -968,7 +968,7 @@
                                 <h4 class="narrative-title">💬 기타 의견</h4>
                                 ${question.data.responses.map(response => `
                                     <div class="quote-card">
-                                        <p class="quote-text">${response}</p>
+                                        <p class="quote-text">${response.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}</p>
                                     </div>
                                 `).join('')}
                             </div>
